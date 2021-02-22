@@ -5,6 +5,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { __param } from 'tslib';
+import { SharedService } from './shared.service';
 
 
 @Injectable({
@@ -12,14 +13,13 @@ import { __param } from 'tslib';
 })
 export class CheckSessionService {
   @Output() login:string="";
-  constructor(private http:HttpClient, private session:SessionStorageService,private router:Router) { }
+  constructor(private http:HttpClient, private session:SessionStorageService,private router:Router,private sharedService:SharedService) { }
   
   checkSession():Observable<any> {
     const url=environment.checkSessionUrl;
       var username=this.session.retrieve("username")==undefined||this.session.retrieve("username")==null?"":this.session.retrieve("username")
       var token=this.session.retrieve("token")==undefined||this.session.retrieve("token")==null?"":this.session.retrieve("token")
-      var httpOptions={
-        headers:new HttpHeaders({
+      var httpHeader=new HttpHeaders({
           'Content-Type':'application/json',
           'Access-Control-Allow-Headers': 'Content-Type',
           'Access-Control-Allow-Methods': 'POST, OPTIONS, GET, PUT',
@@ -30,10 +30,11 @@ export class CheckSessionService {
 
       
         })
-      };
-    console.log(httpOptions);    
+    // console.log(httpOptions);    
     
-    return this.http.post(url,{},httpOptions);
+
+    return this.sharedService.requestConn("post",url,{},httpHeader)
+    // return this.http.post(url,{},httpOptions);
     
   }
 
@@ -61,8 +62,6 @@ export class CheckSessionService {
         'Identity':'ead9c8c86bab17493373b8bf4434c8ca',
         'Username':username,
         'Token':token,
-
-    
       })
     };
   }

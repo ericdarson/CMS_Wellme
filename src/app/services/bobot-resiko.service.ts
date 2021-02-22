@@ -4,33 +4,42 @@ import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { CheckSessionService } from './check-session.service';
+import { SharedService } from './shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BobotResikoService {
   httpOptions:any;
-  constructor(private http:HttpClient,private sessionService:CheckSessionService) {
+  httpheader : HttpHeaders;
+  constructor(private http:HttpClient,private sessionService:CheckSessionService,private sharedService:SharedService) {
    this.httpOptions=sessionService.getHeader();
   }
   
   getBobotResiko():Observable<any>{
     this.httpOptions=this.sessionService.getHeader();
+    this.httpheader = this.httpOptions.headers
     const url=environment.bobotResikoUrl;     
-    return this.http.get(url,this.httpOptions);
+
+    return this.sharedService.requestConn("get",url,{},this.httpheader)
+    // return this.http.get(url,this.httpOptions);
   }
   
   addBobotResiko(namaJenis:string):Observable<any>{
     this.httpOptions=this.sessionService.getHeader();
+    this.httpheader = this.httpOptions.headers
     const url=environment.bobotResikoUrl;
     const body={
       'nama_jenis_reksadana':namaJenis
     }
-    return this.http.post(url,body,this.httpOptions);
+
+    return this.sharedService.requestConn("post",url,body,this.httpheader)
+    // return this.http.post(url,body,this.httpOptions);
   }
   
   updateBobotResiko(bobotResiko:string,persentase:any,id_jenis_reksadana:any):Observable<any>{
     this.httpOptions=this.sessionService.getHeader();
+    this.httpheader = this.httpOptions.headers
     var temp=[];
     for(var i=0;i<persentase.length;i++)
     {
@@ -46,7 +55,9 @@ export class BobotResikoService {
       "input" : temp
     };
     console.log(body);
-    return this.http.put(url,body,this.httpOptions);
+    
+    return this.sharedService.requestConn("put",url,body,this.httpheader)
+    // return this.http.put(url,body,this.httpOptions);
   }
   
   deactivatePromo(kode_promo:string):Observable<any>{
@@ -54,7 +65,9 @@ export class BobotResikoService {
     console.log(kode_promo);
     const url=environment.deletePromoUrl+'/'+kode_promo;
     console.log(url);
-    return this.http.delete(url,this.httpOptions);
+
+    return this.sharedService.requestConn("delete",url,{},this.httpheader)
+    // return this.http.delete(url,this.httpOptions);
   }
 
 }

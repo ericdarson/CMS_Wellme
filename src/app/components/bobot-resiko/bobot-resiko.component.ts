@@ -52,7 +52,7 @@ columnTableBobotResiko :any=[];
       processing: true,
       
     };
-    this.getBobotResiko();
+   
     
   }
   
@@ -95,7 +95,7 @@ columnTableBobotResiko :any=[];
         this.isLogin="block";
         this.session.store("username",response.output_schema.session.username);
         this.session.store("token",response.output_schema.session.new_token);
-      
+        this.getBobotResiko();
       }
       else{
         this.router.navigate(['/login'])

@@ -69,7 +69,7 @@ role:string="";
     responsive:true
       
     };
-    this.getHistoriPenjualan();
+    
     
   }
   
@@ -107,7 +107,7 @@ role:string="";
         this.isLogin="block";
         this.session.store("username",response.output_schema.session.username);
         this.session.store("token",response.output_schema.session.new_token);
-      
+        this.getHistoriPenjualan();
       }
       else{
         this.router.navigate(['/login'])

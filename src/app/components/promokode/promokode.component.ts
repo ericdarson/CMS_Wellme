@@ -63,7 +63,7 @@ export class PromokodeComponent implements OnInit {
     ]
     ,responsive:true
   };
-  this.getPromoKode();
+ 
   
 }
 
@@ -100,7 +100,7 @@ checkSession():void{
       this.isLogin="block";
       this.session.store("username",response.output_schema.session.username);
       this.session.store("token",response.output_schema.session.new_token);
-      
+      this.getPromoKode();
     }
     else{
       this.router.navigate(['/login'])

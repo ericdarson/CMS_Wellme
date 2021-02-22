@@ -48,7 +48,7 @@ export class JenisReksadanaComponent implements OnInit {
       processing: true,
       
     };
-    this.getJenisReksadana();
+   
     
   }
   
@@ -86,7 +86,7 @@ export class JenisReksadanaComponent implements OnInit {
         this.isLogin="block";
         this.session.store("username",response.output_schema.session.username);
         this.session.store("token",response.output_schema.session.new_token);
-        
+        this.getJenisReksadana();
       }
       else{
         this.router.navigate(['/login'])

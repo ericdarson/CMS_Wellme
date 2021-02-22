@@ -71,7 +71,7 @@ export class ProductReksadanaComponent implements OnInit {
   
   ngOnInit(): void {
     this.checkSession();
-    this.getJenisReksadana();
+   
     
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -111,7 +111,6 @@ export class ProductReksadanaComponent implements OnInit {
     };
     
     
-    this.getProdukReksadana();
     
   }
   
@@ -148,7 +147,7 @@ export class ProductReksadanaComponent implements OnInit {
         this.isLogin="block";
         this.session.store("username",response.output_schema.session.username);
         this.session.store("token",response.output_schema.session.new_token);
-        
+        this.getJenisReksadana();
       }
       else{
         this.router.navigate(['/login'])
@@ -468,7 +467,8 @@ export class ProductReksadanaComponent implements OnInit {
           
           this.jenisReksadanaService.getJenisReksadana().subscribe((response:any)=>{
             this.jenisReksadana=response.output_schema;
-            
+
+            this.getProdukReksadana();
           }, (err:any) => {
             console.log('-----> err', err);
           });

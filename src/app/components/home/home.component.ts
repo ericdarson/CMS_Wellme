@@ -59,7 +59,8 @@ export class HomeComponent implements OnInit {
         this.isLogin="block";
         this.session.store("username",response.output_schema.session.username);
         this.session.store("token",response.output_schema.session.new_token);
-      
+        
+        this.renderOverview();
       }
       else{
         this.router.navigate(['/login'])
@@ -70,15 +71,9 @@ export class HomeComponent implements OnInit {
     });
   }
   
-  ngOnInit(): void {  
-
-    
+  ngOnInit(): void {    
     this.checkSession();
-    this.renderOverview();
-    this.renderPromoChart();  
   }
-
-
 
   resetOverview():void{
     
@@ -91,7 +86,7 @@ export class HomeComponent implements OnInit {
   renderOverview():void{
     this.resetOverview();
     this.dashboardService.getDashboard(this.chart_type,this.datePipe.transform(this.start_date, 'dd-MM-yyyy'),this.datePipe.transform(this.end_date, 'dd-MM-yyyy')).subscribe(response=> {
-      
+     
       this.user=response.output_schema.user;
       this.newUser=response.output_schema.new_user;
       this.jumlahInvestasi=response.output_schema.jumlah_investasi;
@@ -134,12 +129,14 @@ export class HomeComponent implements OnInit {
         };
         
         new Chartist.Line('#headline-chart', data, options);
+         
       }(jQuery));  
 
       this.calculateDashboardOverview();
 
       this.display="block"
       this.loader="hidden";
+      this.renderPromoChart()
     }, (error) => {
       console.log('error -->',error);
     });

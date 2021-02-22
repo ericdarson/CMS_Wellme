@@ -70,7 +70,7 @@ export class PromoakumulasiComponent implements OnInit {
       ]
     ,responsive:true
     };
-    this.getPromoAkumulasi();
+   
     
   }
   
@@ -110,7 +110,7 @@ export class PromoakumulasiComponent implements OnInit {
         this.isLogin="block";
         this.session.store("username",response.output_schema.session.username);
         this.session.store("token",response.output_schema.session.new_token);
-      
+        this.getPromoAkumulasi();
       }
       else{
         this.router.navigate(['/login'])

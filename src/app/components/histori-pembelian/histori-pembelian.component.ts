@@ -69,7 +69,7 @@ export class HistoriPembelianComponent implements OnInit {
     responsive:true
       
     };
- this.getHistoriPembelian();
+ 
     
   }
   
@@ -107,7 +107,7 @@ export class HistoriPembelianComponent implements OnInit {
         this.isLogin="block";
         this.session.store("username",response.output_schema.session.username);
         this.session.store("token",response.output_schema.session.new_token);
-      
+        this.getHistoriPembelian();
       }
       else{
         this.router.navigate(['/login'])
